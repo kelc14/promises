@@ -8,18 +8,17 @@ let drawBtn = document.querySelector("#draw-btn");
 drawBtn.addEventListener("click", drawCard);
 
 // draw a card when draw button clicked
-function drawCard() {
+async function drawCard() {
   // if no cards remain, hide the draw button, add reset button and reshuffle the deck
   if (remCards === 0) {
     drawBtn.style.display = "none";
     addReset();
   } else {
     //  otherwise draw a new card and display it
-    $.getJSON(`${baseUrl}/${deckId}/draw/?count=1`).then((res) => {
-      deckId = res.deck_id;
-      remCards = res.remaining;
-      displayCard(res.cards[0].value, res.cards[0].suit);
-    });
+    let res = await $.getJSON(`${baseUrl}/${deckId}/draw/?count=1`);
+    deckId = res.deck_id;
+    remCards = res.remaining;
+    displayCard(res.cards[0].value, res.cards[0].suit);
   }
 }
 
@@ -53,14 +52,13 @@ function addReset() {
   btnContainer.appendChild(resetBtn);
 
   // add event listener - when clicked, shuffle cards for our deck and then hide the reshuffle button, display draw card button
-  resetBtn.addEventListener("click", () => {
-    $.getJSON(`https://deckofcardsapi.com/api/deck/${deckId}/shuffle/`).then(
-      (res) => {
-        remCards = res.remaining;
-        drawBtn.style.display = "initial";
-        resetBtn.style.display = "none";
-        cardContainer.innerHTML = "";
-      }
+  resetBtn.addEventListener("click", async () => {
+    let res = await $.getJSON(
+      `https://deckofcardsapi.com/api/deck/${deckId}/shuffle/`
     );
+    remCards = res.remaining;
+    drawBtn.style.display = "initial";
+    resetBtn.style.display = "none";
+    cardContainer.innerHTML = "";
   });
 }
