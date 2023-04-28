@@ -20,6 +20,7 @@ $.getJSON(`${url}/${num}?json`)
 
 let otherNums = [4, 20, 29];
 $.getJSON(`${url}/${otherNums}`).then((res) => {
+  console.log(res[4]);
   for (let i = 0; i < otherNums.length; i++) {
     currNum = otherNums[i];
     addToList("num-facts", res[currNum]);
