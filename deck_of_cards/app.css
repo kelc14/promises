@@ -1,0 +1,22 @@
+body {
+  background-color: green;
+}
+
+.btn-container {
+  width: 100%;
+  text-align: center;
+}
+
+.card-container {
+  position: relative;
+  text-align: center;
+}
+
+.playing-card {
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 200px;
+  left: 35%;
+  height: 500px;
+}
